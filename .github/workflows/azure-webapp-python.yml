@@ -1,0 +1,53 @@
+# This workflow will build a Python app and deploy it to an Azure Web App on Linux when a commit is pushed to your default branch.
+#
+# This workflow assumes you have already created the target Azure Web App.
+# For instructions see https://learn.microsoft.com/en-us/azure/app-service/quickstart-python
+#
+# To configure this workflow:
+# 1. Download the publish profile for your Azure Web App from the Azure portal.
+# 2. Add it as a repository secret named AZURE_WEBAPP_PUBLISH_PROFILE.
+# 3. Change env variables for your configuration.
+#
+# For more information on:
+#   - GitHub Actions for Azure: https://github.com/Azure/Actions
+#   - Azure Web Apps Deploy Action: https://github.com/Azure/webapps-deploy
+#   - Publish Profile: https://github.com/Azure/webapps-deploy#using-publish-profile-as-deployment-credential
+
+name: Deploy Python project to Azure Web App
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  AZURE_WEBAPP_NAME: 'analyzeapi'            # set this to your web app name on Azure
+  AZURE_WEBAPP_PACKAGE_PATH: '.'             # set this to the path to your web app project, defaults to the repository root
+  PYTHON_VERSION: '3.11'                     # set this to the python version to use
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v4
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 'Resolve Project Dependencies Using Pip'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        popd
+
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
