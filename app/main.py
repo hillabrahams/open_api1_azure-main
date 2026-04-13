@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.models import EntryRequest, EntryAnalysis
-from app.openai_service import analyze_entry
+from app.openai_service_azure import analyze_entry
 
 app = FastAPI()
 
