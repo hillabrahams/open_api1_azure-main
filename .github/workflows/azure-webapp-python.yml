@@ -37,14 +37,6 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: 'Resolve Project Dependencies Using Pip'
-      shell: bash
-      run: |
-        pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        popd
-
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v3
       with:
