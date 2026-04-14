@@ -20,9 +20,8 @@ on:
     branches: ["main"]
 
 env:
-  AZURE_WEBAPP_NAME: 'analyzeapi'            # set this to your web app name on Azure
-  AZURE_WEBAPP_PACKAGE_PATH: '.'             # set this to the path to your web app project, defaults to the repository root
-  PYTHON_VERSION: '3.11'                     # set this to the python version to use
+  AZURE_WEBAPP_NAME: 'analyzeapi'
+  PYTHON_VERSION: '3.11'
 
 jobs:
   build-and-deploy:
@@ -37,9 +36,17 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
+    - name: 'Install dependencies into virtual environment'
+      shell: bash
+      run: |
+        python -m venv antenv
+        source antenv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: .
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
