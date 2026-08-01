@@ -42,8 +42,8 @@ Additional Flags:
 You must respond with valid JSON in exactly this format:
 {
   "entry_text": "the original text",
-  "score": -5,
   "reasoning": "brief rationale here",
+  "score": -5,
   "confidence": 0.8,
   "neglect_true": false,
   "repair_true": false,
@@ -68,7 +68,33 @@ def call_openai_api(entry_text: str) -> str:
         ],
         temperature=0,
         top_p=1,
-        response_format={"type": "json_object"},
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "entry_analysis",
+                "strict": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "entry_text": {"type": "string"},
+                        "reasoning": {"type": "string"},
+                        "score": {"type": "integer", "minimum": -10, "maximum": 10},
+                        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                        "neglect_true": {"type": "boolean"},
+                        "repair_true": {"type": "boolean"},
+                        "neutral_true": {"type": "boolean"},
+                        "bid_true": {"type": "boolean"},
+                        "sce_true": {"type": "boolean"}
+                    },
+                    "required": [
+                        "entry_text", "reasoning", "score", "confidence",
+                        "neglect_true", "repair_true", "neutral_true",
+                        "bid_true", "sce_true"
+                    ],
+                    "additionalProperties": False
+                }
+            }
+        },
         store=False
     )
     return response.choices[0].message.content
@@ -93,38 +119,8 @@ def analyze_entry(entry_text: str) -> dict:
                 "sce_true": False
             }
 
-        # Normalize key names
-        if "entry text" in parsed_response:
-            parsed_response["entry_text"] = parsed_response.pop("entry text")
-
-        # Ensure all required keys exist
-        required_keys = {"entry_text", "score", "reasoning", "confidence", "neglect_true", "repair_true", "neutral_true", "bid_true", "sce_true"}
-        missing_keys = required_keys - parsed_response.keys()
-
-        if missing_keys:
-            defaults = {
-                "entry_text": entry_text,
-                "score": 0,
-                "reasoning": "Incomplete response from AI.",
-                "confidence": 0.0,
-                "neglect_true": False,
-                "repair_true": False,
-                "neutral_true": False,
-                "bid_true": False,
-                "sce_true": False
-            }
-            for key in missing_keys:
-                parsed_response[key] = defaults[key]
-
-        # Ensure boolean fields are actually boolean
-        boolean_fields = ["neglect_true", "repair_true", "neutral_true", "bid_true", "sce_true"]
-        for field in boolean_fields:
-            if field in parsed_response:
-                if isinstance(parsed_response[field], str):
-                    parsed_response[field] = parsed_response[field].lower() == 'true'
-                elif isinstance(parsed_response[field], (int, float)):
-                    parsed_response[field] = bool(parsed_response[field])
-
+        # Strict json_schema mode guarantees all required keys are present with
+        # correct types, so key backfill / boolean coercion is no longer needed.
         # Validate score range
         if "score" in parsed_response:
             try:
