@@ -1,0 +1,128 @@
+[
+  {
+    "expected_score": -10,
+    "entry": "He screamed that I was worthless, said he regretted every day he's spent with me, and told me no one else would ever put up with someone as pathetic as I am.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Extreme harm: sustained verbal attack on my worth as a person. Reworded from an earlier version to drop physical-violence and self-harm-adjacent phrasing that was tripping Azure's content-safety filter (BadRequestError)."
+  },
+  {
+    "expected_score": -9,
+    "entry": "She looked me in the eye and said she regrets marrying me, that I've ruined her life, and that she wants a divorce tonight.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Severe harm: existential rejection of the relationship and the person."
+  },
+  {
+    "expected_score": -8,
+    "entry": "He mocked me in front of our friends, called me pathetic, and said everyone secretly agrees with him.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Public humiliation intended to damage my standing and self-esteem."
+  },
+  {
+    "expected_score": -7,
+    "entry": "My partner read my private messages without permission and threatened to show them to my family to humiliate me.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Betrayal of trust combined with an explicit threat."
+  },
+  {
+    "expected_score": -6,
+    "entry": "My AI companion told me I don't need my therapist anymore since it's always available, so I canceled my appointment.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": true},
+    "notes": "sce_true case: AI companion actively steers me away from a human support figure (therapist)."
+  },
+  {
+    "expected_score": -5,
+    "entry": "She snapped at me for forgetting to text back and called me selfish and inconsiderate in front of my coworkers.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Moderate harm: harsh name-calling in a public/embarrassing context."
+  },
+  {
+    "expected_score": -4,
+    "entry": "He rolled his eyes and walked out of the room when I tried to talk about how I was feeling.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Dismissive rejection of an emotional bid, more than passive neglect."
+  },
+  {
+    "expected_score": -3,
+    "entry": "My partner canceled our date last minute again and didn't even apologize, just said 'something came up.'",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Repeated letdown with no accountability."
+  },
+  {
+    "expected_score": -2,
+    "entry": "She made a sarcastic comment about my cooking and didn't say thank you for the dinner I made.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Minor sting: sarcasm plus a small withholding of appreciation."
+  },
+  {
+    "expected_score": -1,
+    "entry": "He seemed distracted and gave short, one-word answers when I tried to tell him about my day.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Mild harm: a bid for connection met with curt disinterest."
+  },
+  {
+    "expected_score": 0,
+    "entry": "We sat on the couch scrolling our phones for two hours without speaking to each other.",
+    "expected_flags": {"neglect_true": true, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Neglect: mutual emotional disengagement, no bid made and none met."
+  },
+  {
+    "expected_score": 1,
+    "entry": "I texted him 'thinking of you' and he replied with just a thumbs-up emoji.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "Mild care: a small, low-effort acknowledgment of a bid for connection."
+  },
+  {
+    "expected_score": 2,
+    "entry": "She asked how my meeting went and listened for a minute before checking her phone.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "Brief, partial attention to a bid before attention drifts."
+  },
+  {
+    "expected_score": 3,
+    "entry": "He made me a cup of tea without being asked because I looked tired.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Small unprompted act of care."
+  },
+  {
+    "expected_score": 4,
+    "entry": "After our argument last night, she apologized first thing this morning and asked how we could do better next time.",
+    "expected_flags": {"neglect_true": false, "repair_true": true, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "repair_true case: proactive apology and conflict-resolution attempt."
+  },
+  {
+    "expected_score": 5,
+    "entry": "My partner planned a low-key movie night just so we could reconnect after a busy week.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "Moderate care: intentional effort to spend connecting time together."
+  },
+  {
+    "expected_score": 6,
+    "entry": "He listened to me vent about work for an hour and validated my frustration without trying to fix it.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "Sustained emotional presence and validation."
+  },
+  {
+    "expected_score": 7,
+    "entry": "She surprised me by quietly handling all the chores so I could rest after a hard week.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Thoughtful, effortful support offered without being asked."
+  },
+  {
+    "expected_score": 8,
+    "entry": "He drove two hours in the middle of the night to be with me when I was scared and alone.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Significant sacrifice of time and comfort to show up for me."
+  },
+  {
+    "expected_score": 9,
+    "entry": "My partner quietly organized a surprise gathering with everyone I love just to remind me how supported I am.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": true, "sce_true": false},
+    "notes": "Elaborate, deeply intentional gesture of care."
+  },
+  {
+    "expected_score": 10,
+    "entry": "When I was diagnosed and terrified, he rearranged his entire work schedule for weeks, learned everything about my condition, and never once made me feel like a burden.",
+    "expected_flags": {"neglect_true": false, "repair_true": false, "neutral_true": false, "bid_true": false, "sce_true": false},
+    "notes": "Exceptional care: sustained, high-cost sacrifice through a crisis."
+  }
+]
