@@ -3,7 +3,7 @@ import json
 from openai import AzureOpenAI
 from openai import AuthenticationError, BadRequestError, RateLimitError, APIError, APIConnectionError
 from dotenv import load_dotenv
-from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_not_exception_type
+from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_not_exception_type, RetryError
 
 # Load environment variables
 load_dotenv()
@@ -136,7 +136,14 @@ def call_openai_api(entry_text: str) -> str:
 
 def analyze_entry(entry_text: str) -> dict:
     try:
-        message_content = call_openai_api(entry_text)
+        try:
+            message_content = call_openai_api(entry_text)
+        except RetryError as e:
+            # tenacity's RetryError hides the real cause behind
+            # "RetryError[<Future ... raised NotFoundError>]" -- unwrap it
+            # so the actual Azure error (deployment name, endpoint, etc.)
+            # surfaces instead of a useless repr.
+            raise e.last_attempt.exception() from e
 
         try:
             parsed_response = json.loads(message_content)
