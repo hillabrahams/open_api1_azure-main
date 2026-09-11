@@ -4,6 +4,14 @@ from app.openai_service_azure import analyze_entry
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
 @app.post("/analyze/", response_model=EntryAnalysis)
 async def analyze_journal_entry(request: EntryRequest):
     try:

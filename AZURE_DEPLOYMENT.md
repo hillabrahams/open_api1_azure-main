@@ -48,8 +48,8 @@ These are required — `app/openai_service_azure.py` needs them at runtime
 |---|---|---|
 | `AZURE_OPENAI_API_KEY` | Yes | From the Azure OpenAI resource, Keys and Endpoint blade |
 | `AZURE_OPENAI_ENDPOINT` | Yes | e.g. `https://<resource-name>.openai.azure.com/` |
-| `AZURE_OPENAI_API_VERSION` | No | Defaults to `2024-12-01-preview` if unset |
-| `AZURE_OPENAI_DEPLOYMENT_NAME` | No | Defaults to `gpt-4o` if unset |
+| `AZURE_OPENAI_API_VERSION` | No | Defaults to `2025-01-01-preview` if unset. Must be a real Azure OpenAI REST API version (e.g. `2024-10-21`, `2025-01-01-preview`) — not a model snapshot date like `2025-04-14`. |
+| `AZURE_OPENAI_DEPLOYMENT_NAME` | No | Defaults to `gpt-4.1-2025-04-14` if unset. Must match the exact deployment name configured in the Azure OpenAI resource (Deployments blade), not just the base model name. |
 
 As of the current code, a missing `AZURE_OPENAI_API_KEY` or
 `AZURE_OPENAI_ENDPOINT` no longer crashes the whole app at startup — the
